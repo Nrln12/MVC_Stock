@@ -1,0 +1,36 @@
+﻿@using MvcStock.Models.Entity
+@model List<TBL_Customers>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@using (Html.BeginForm("Index","Customer", FormMethod.Get))
+            {
+<b>Customer name:</b> <p>@Html.TextBox("p")</p>
+                <input type="submit" value="Search"/>
+            }
+<table class="table table-bordered">
+    <tr>
+        <th>Customer ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Delete</th>
+        <th>Update</th>
+        <th>Alert</th>
+    </tr>
+    <tbody>
+        @foreach (var cstms in Model)
+        {
+            <tr>
+                <th>@cstms.CustomerID</th>
+                <td>@cstms.CustomerName</td>
+                <td>@cstms.CustomerLastName</td>
+                <td><a href="/Customer/Delete/@cstms.CustomerID" class="btn btn-danger">Delete</a></td>
+                <td><a href="/Customer/ReturnCustomer/@cstms.CustomerID" class="btn btn-success">Update</a></td>
+                <td>@Html.ActionLink("Delete button", "Delete", new { id = cstms.CustomerID }, new { @class = "btn btn-warning", onclick = "return confirm('Gercekten silmek istiyorumusunuz?')" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/Customer/NewCustomer" class="btn btn-primary">Add customer</a>
